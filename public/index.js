@@ -17,11 +17,11 @@ async function main() {
 
 // Bonus Note: 
 // Another way to write the above lines would to refactor it as:
-    const {GME, MSFT, DIS, BTNX} = mockData; 
+    const {GME, MSFT, DIS, BNTX} = mockData; 
 // This is an example of "destructuring" an object
 // "Destructuring" creates new variables from an object or an array
-    const stocks = [GME, MSFT, DIS, BTNX ];
-    console.log(stocks)
+    const stocks = [GME, MSFT, DIS, BNTX];
+    //console.log(stocks)
 //=======================================================================
 function getColor(stock){
     if(stock === "GME"){
@@ -37,13 +37,13 @@ function getColor(stock){
         return 'rgba(166, 43, 158, 0.7)'
     }
 }
-    //stocks.forEach( stock => stock.values.reverse())
+    stocks.forEach( stock => stock.values.reverse())
 
     // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
-            labels: stocks[0].values.map(value => value.datetime),
+            labels: stocks[0].values.reverse().map(value => value.datetime),
             datasets: stocks.map( stock => ({
                 label: stock.meta.symbol,
                 data: stock.values.map(value => parseFloat(value.high)),
