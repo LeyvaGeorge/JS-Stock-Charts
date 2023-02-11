@@ -22,20 +22,47 @@ async function main() {
 // "Destructuring" creates new variables from an object or an array
     const stocks = [GME, MSFT, DIS, BTNX ];
     console.log(stocks)
-    
+//=======================================================================
+function getColor(stock){
+    if(stock === "GME"){
+        return 'rgba(61, 161, 61, 0.7)'
+    }
+    if(stock === "MSFT"){
+        return 'rgba(209, 4, 25, 0.7)'
+    }
+    if(stock === "DIS"){
+        return 'rgba(18, 4, 209, 0.7)'
+    }
+    if(stock === "BNTX"){
+        return 'rgba(166, 43, 158, 0.7)'
+    }
+}
+    //stocks.forEach( stock => stock.values.reverse())
+
+    // Time Chart
     new Chart(timeChartCanvas.getContext('2d'), {
         type: 'line',
         data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-                label: '# of Votes',
-                data: [12, 19, 3, 5, 2, 3],
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)'                
-            }]
+            labels: stocks[0].values.map(value => value.datetime),
+            datasets: stocks.map( stock => ({
+                label: stock.meta.symbol,
+                data: stock.values.map(value => parseFloat(value.high)),
+                backgroundColor:  getColor(stock.meta.symbol),
+                borderColor: getColor(stock.meta.symbol),
+            }))
         }
     });
+    
+    
+
+
+
+
+    
+    
 }
+
+
 
 
 
