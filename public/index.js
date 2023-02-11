@@ -21,7 +21,7 @@ async function main() {
 // This is an example of "destructuring" an object
 // "Destructuring" creates new variables from an object or an array
     const stocks = [GME, MSFT, DIS, BNTX];
-    //console.log(stocks)
+    console.log(stocks)
 //=======================================================================
 function getColor(stock){
     if(stock === "GME"){
@@ -36,6 +36,15 @@ function getColor(stock){
     if(stock === "BNTX"){
         return 'rgba(166, 43, 158, 0.7)'
     }
+}
+function getHighest(obj){
+    let max = 0;
+    for(let i = 0; i < obj.length; i++)
+    {
+        if(max< obj[i])
+            max = obj[i]
+    }
+    return max;
 }
     stocks.forEach( stock => stock.values.reverse())
 
@@ -53,12 +62,48 @@ function getColor(stock){
         }
     });
     
-    
+    // ===== Highest Stock Price ===== 
+    new Chart(highestPriceChartCanvas.getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['GME', 'MSFT', 'DIS', 'BNTX'],
+            datasets: [{
+                label: 'Highest',
+                data: [
+                    getHighest(stocks[0].values.map(value => parseFloat(value.high))),
+                    getHighest(stocks[1].values.map(value => parseFloat(value.high))),
+                    getHighest(stocks[2].values.map(value => parseFloat(value.high))),
+                    getHighest(stocks[3].values.map(value => parseFloat(value.high)))
+                ],
+                backgroundColor: [
+                    getColor(stocks[0].meta.symbol),
+                    getColor(stocks[1].meta.symbol),
+                    getColor(stocks[2].meta.symbol),
+                    getColor(stocks[3].meta.symbol)
+                ],
+                borderColor: [
+                    getColor(stocks[0].meta.symbol),
+                    getColor(stocks[1].meta.symbol),
+                    getColor(stocks[2].meta.symbol),
+                    getColor(stocks[3].meta.symbol)
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+
+let resutls = stocks[0].values.map(value => parseFloat(value.high))    
+console.log(resutls)
 
 
-
-
-    
+    // ===== Average Stock Price===== averagePriceChartCanvas
     
 }
 
